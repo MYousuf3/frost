@@ -21,7 +21,7 @@ st.markdown(f"<h2 style='text-align: center; color: white;'>{state} School Distr
 
 
 #create dataframe of 100 schools with least funding
-df = pd.read_excel("dcd23.xlsx")
+df = pd.read_csv("dcd23.csv")
 
 
 #filter to data from selected state 2020
@@ -79,8 +79,7 @@ df = df.rename(columns={"Funding Gap": "Per Student Funding Gap", "Total Gap": "
 df.reset_index(inplace=True)
 
 #Display information
-if option == opt1:
-    st.dataframe(df)
+st.dataframe(df)
 
 bar_data = df[['District', 'Post Allocation Gap']]
 bar_data.loc[:, 'Difference'] = df['Per Student Funding Gap'] - df['Post Allocation Gap']
