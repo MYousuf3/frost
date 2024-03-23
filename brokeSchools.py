@@ -60,24 +60,13 @@ df = df.rename(columns = {'district':'District',
 totalEnrollment = df['Enrollment Size'].sum()
 
 
-#Dropdown menu that determines algorithm for weight of districts
-opt1 = 'Helping those in need proportionately'
-opt2 = 'Impacting a greater audience'
-option = st.sidebar.selectbox('What is most important to you?',
-                              (opt1, opt2), placeholder="Select One")
-
 
 #Number input that takes in the amount of funds to be allocated
 funds = st.sidebar.number_input(label='Enter Funds', value=10000000)
 #st.write("The amount of funds is equal to ", funds)
 
 
-#Implement previously chosen option
-if option == opt1:
-    # find weight by taking sqrt of a schools total gap / states's funding gap
-    df.loc[:, 'weight'] = np.sqrt(df['Total Gap']/totalgap_sum)
-elif option == opt2:
-    df.loc[:, 'weight'] = df['Total Gap']/totalgap_sum
+df.loc[:, 'weight'] = np.sqrt(df['Total Gap']/totalgap_sum)
 
 
 # calculate what percentage of funds should be allocated to each school
@@ -90,7 +79,7 @@ df = df.rename(columns={"Funding Gap": "Per Student Funding Gap", "Total Gap": "
 df.reset_index(inplace=True)
 
 #Display information
-if option == opt2 or option == opt1:
+if option == opt1:
     st.dataframe(df)
 
 bar_data = df[['District', 'Post Allocation Gap']]
